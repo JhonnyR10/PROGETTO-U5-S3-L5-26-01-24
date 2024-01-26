@@ -1,6 +1,7 @@
 package giovannilongo.PROGETTOU5S3L5260124.security;
 
 import giovannilongo.PROGETTOU5S3L5260124.entities.Utente;
+import giovannilongo.PROGETTOU5S3L5260124.exceptions.UnauthorizedException;
 import giovannilongo.PROGETTOU5S3L5260124.services.UtenteService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

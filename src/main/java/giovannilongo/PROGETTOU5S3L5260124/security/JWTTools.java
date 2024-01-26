@@ -1,6 +1,7 @@
 package giovannilongo.PROGETTOU5S3L5260124.security;
 
 import giovannilongo.PROGETTOU5S3L5260124.entities.Utente;
+import giovannilongo.PROGETTOU5S3L5260124.exceptions.UnauthorizedException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
