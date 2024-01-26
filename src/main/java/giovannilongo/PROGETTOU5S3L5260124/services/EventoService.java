@@ -8,6 +8,7 @@ import giovannilongo.PROGETTOU5S3L5260124.entities.Utente;
 import giovannilongo.PROGETTOU5S3L5260124.exceptions.NotFoundException;
 import giovannilongo.PROGETTOU5S3L5260124.payloads.EventoDTO;
 import giovannilongo.PROGETTOU5S3L5260124.repositories.EventoRepository;
+import giovannilongo.PROGETTOU5S3L5260124.repositories.PrenotazioneRepository;
 import giovannilongo.PROGETTOU5S3L5260124.repositories.UtenteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -21,7 +22,8 @@ import java.io.IOException;
 
 @Service
 public class EventoService {
-
+    @Autowired
+    private PrenotazioneRepository prenotazioneRepository;
     @Autowired
     private EventoRepository eventoRepository;
 
@@ -82,6 +84,7 @@ public class EventoService {
             Prenotazione prenotazione = new Prenotazione();
             prenotazione.setEvento(evento);
             prenotazione.setUtente(utente);
+            prenotazioneRepository.save(prenotazione);
 
             evento.getPrenotazioni().add(prenotazione);
             evento.setPostiDisponibili(evento.getPostiDisponibili() - 1);
