@@ -21,7 +21,7 @@ public class EventoController {
 
     @PostMapping("/crea")
     @ResponseStatus(HttpStatus.CREATED)
-    @PreAuthorize("hasAuthority('ORGANIZZATORE')")
+    @PreAuthorize("hasAuthority('ORGANIZZATORE_EVENTI')")
     public EventoResponseDTO creaNuovoEvento(@RequestBody EventoDTO body,
                                              @AuthenticationPrincipal Utente currentUser) {
         Evento nuovoEvento = eventoService.creaNuovoEvento(body, currentUser.getUsername());
@@ -41,21 +41,21 @@ public class EventoController {
 
 
     @PutMapping("/{eventId}")
-    @PreAuthorize("hasAuthority('ORGANIZZATORE')")
+    @PreAuthorize("hasAuthority('ORGANIZZATORE_EVENTI')")
     public Evento findEventByIdAndUpdate(@PathVariable long eventId, @RequestBody Evento eventoDTO) {
         return eventoService.findByIdAndUpdate(eventId, eventoDTO);
     }
 
     @DeleteMapping("/{eventId}")
-    @PreAuthorize("hasAuthority('ORGANIZZATORE')")
+    @PreAuthorize("hasAuthority('ORGANIZZATORE_EVENTI')")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void eliminaEvento(@PathVariable Long eventId) {
+    public void eliminaEvento(@PathVariable long eventId) {
         eventoService.findByIdAndDelete(eventId);
     }
 
     @PostMapping("/{eventoId}/prenota")
     @PreAuthorize("isAuthenticated()")
-    public void prenotaEvento(@PathVariable Long eventoId,
+    public void prenotaEvento(@PathVariable long eventoId,
                               @AuthenticationPrincipal Utente currentUser) {
         eventoService.prenotaEvento(eventoId, currentUser);
     }

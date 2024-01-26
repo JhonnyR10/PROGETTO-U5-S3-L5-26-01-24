@@ -1,5 +1,6 @@
 package giovannilongo.PROGETTOU5S3L5260124.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -27,6 +28,7 @@ public class Utente implements UserDetails {
     @Enumerated(EnumType.STRING)
     private Ruolo ruolo;
     @OneToMany(mappedBy = "utente")
+    @JsonIgnore
     private List<Prenotazione> prenotazioni;
 
     @Override

@@ -1,5 +1,6 @@
 package giovannilongo.PROGETTOU5S3L5260124.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,6 +25,7 @@ public class Evento {
     private int postiDisponibili;
 
     @OneToMany(mappedBy = "evento")
+    @JsonIgnore
     private List<Prenotazione> prenotazioni;
 
     @ManyToOne
