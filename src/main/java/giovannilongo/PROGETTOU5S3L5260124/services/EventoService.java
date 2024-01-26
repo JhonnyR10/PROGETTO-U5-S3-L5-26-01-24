@@ -1,5 +1,7 @@
 package giovannilongo.PROGETTOU5S3L5260124.services;
 
+import com.cloudinary.Cloudinary;
+import com.cloudinary.utils.ObjectUtils;
 import giovannilongo.PROGETTOU5S3L5260124.entities.Evento;
 import giovannilongo.PROGETTOU5S3L5260124.entities.Prenotazione;
 import giovannilongo.PROGETTOU5S3L5260124.entities.Utente;
@@ -13,6 +15,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
 
 @Service
 public class EventoService {
@@ -22,6 +27,8 @@ public class EventoService {
 
     @Autowired
     private UtenteRepository utenteRepository;
+    @Autowired
+    private Cloudinary cloudinaryUploader;
 
     public Evento creaNuovoEvento(EventoDTO eventoDTO, String usernameOrganizzatore) {
         Utente organizzatore = utenteRepository.findByUsername(usernameOrganizzatore)
@@ -33,6 +40,7 @@ public class EventoService {
         nuovoEvento.setData(eventoDTO.data());
         nuovoEvento.setLuogo(eventoDTO.luogo());
         nuovoEvento.setPostiDisponibili(eventoDTO.postiDisponibili());
+        nuovoEvento.setAvatar("https://ui-avatars.com/api/?name=" + eventoDTO.titolo() + "+" + eventoDTO.luogo());
         nuovoEvento.setOrganizzatore(organizzatore);
 
         return eventoRepository.save(nuovoEvento);
@@ -84,4 +92,10 @@ public class EventoService {
         }
     }
 
+    public Evento uploadAvatar(long id, MultipartFile file) throws IOException {
+        Evento found = this.findById(id);
+        String avatarURL = (String) cloudinaryUploader.uploader().upload(file.getBytes(), ObjectUtils.emptyMap()).get("url");
+        found.setAvatar(avatarURL);
+        return eventoRepository.save(found);
+    }
 }

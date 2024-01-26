@@ -23,7 +23,7 @@ public class Evento {
     private LocalDate data;
     private String luogo;
     private int postiDisponibili;
-
+    private String avatar;
     @OneToMany(mappedBy = "evento")
     @JsonIgnore
     private List<Prenotazione> prenotazioni;
@@ -40,6 +40,7 @@ public class Evento {
                 ", data=" + data +
                 ", luogo='" + luogo + '\'' +
                 ", postiDisponibili=" + postiDisponibili +
+                ", avatar='" + avatar + '\'' +
                 ", organizzatore=" + organizzatore +
                 '}';
     }

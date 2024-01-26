@@ -11,6 +11,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
 
 @RestController
 @RequestMapping("/eventi")
@@ -60,4 +63,13 @@ public class EventoController {
         eventoService.prenotaEvento(eventoId, currentUser);
     }
 
+    @PatchMapping("/{eventoId}/avatar")
+    @PreAuthorize("hasAuthority('ORGANIZZATORE_EVENTI')")
+    public Evento uploadAvatar(@RequestParam("avatar") MultipartFile file, @PathVariable long eventoId) {
+        try {
+            return eventoService.uploadAvatar(eventoId, file);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
